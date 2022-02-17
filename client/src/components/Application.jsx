@@ -1,6 +1,7 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import TopNav from "./shared/TopNav";
+import Board from "./dashboard/Board";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import UISection from "./ui/UISection";
 import AllBoards from "./ui/AllBoards";
@@ -18,7 +19,9 @@ const Application = () => {
   return (
     <div>
       <TopNav />
+      <Switch>
       <Route path="/" exact component={BoardsDashboardContainer} />
+      <Route path="/boards/:id" component={Board} />
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
       <Route path="/ui/cardArchived" component={CardArchived} />
@@ -33,6 +36,7 @@ const Application = () => {
       <Route path="/ui/labelsPopover" component={LabelsPopover} />
       <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
       <Route path="/ui/singleBoard" component={SingleBoard} />
+      </Switch>
     </div>
   );
 };
