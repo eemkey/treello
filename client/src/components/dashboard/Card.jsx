@@ -1,6 +1,8 @@
 import React from "react";
 
 const Card = ({ card }) => {
+    let dueDate = new Date(card.dueDate).toDateString()
+    dueDate = dueDate.split(" ").slice(1, 3).join(" ");
     return (
         <div id="cards-container" data-id="list-1-cards">
         <div className="card-background">
@@ -19,7 +21,7 @@ const Card = ({ card }) => {
             </div>
             <div className="card-icons">
             <i className="clock-icon sm-icon overdue-recent completed">
-                {card.dueDate}
+                {dueDate}
             </i>
             <i className="description-icon sm-icon"></i>
             <i className="comment-icon sm-icon"></i>

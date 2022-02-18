@@ -5,7 +5,6 @@ import Card from "./Card"
 
 const List = ( {list} ) => {
 const cards = useSelector((state) => state.cards.filter(card => card.listId === list._id));
-console.log(cards)
 
   return (
     <div className="list-wrapper">
@@ -42,9 +41,9 @@ console.log(cards)
           </div>
         </div>
         <AddACard />
+        </div>
       </div>
     </div>
-  </div>
   )
 }
 

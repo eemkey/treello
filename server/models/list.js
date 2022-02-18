@@ -5,6 +5,7 @@ const ListSchema = new Schema(
   {
     title: {
       type: String,
+      required: true,
       trim: true,
     },
     boardId: {

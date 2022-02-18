@@ -8,6 +8,7 @@ export default function boards(state = [], action) {
       return state.concat(newBoard);
     }
     case "BOARD_FETCHED_SUCCESS": {
+      // eslint-disable-next-line no-unused-vars
       const { lists, ...boardWithoutLists } = action.board;
       return [boardWithoutLists];
     }
