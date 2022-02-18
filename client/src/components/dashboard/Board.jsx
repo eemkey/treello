@@ -2,13 +2,14 @@ import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as actions from "../../actions/BoardActions";
-import List from "./List";
+import ExistingLists from "./ExistingLists";
+import AddAList from "./AddAList"
+
 
 const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards[0]);
-  const lists = useSelector((state) => state.lists);
 
   useEffect(() => {
     dispatch(actions.fetchBoard(id));
@@ -36,20 +37,9 @@ if (!board) {
 
       <main>
         <div id="list-container" className="list-container">
-          <div id="existing-lists" className="existing-lists">
-          {lists.map(list => {
-            return <List key={list._id} list={list}/>
-        })}
+          <ExistingLists />
+          <AddAList />
         </div>
-        </div>
-        <div id="new-list" className="new-list">
-            <span>Add a list...</span>
-            <input type="text" placeholder="Add a list..." />
-            <div>
-              <input type="submit" className="button" value="Save" />
-              <i className="x-icon icon"></i>
-            </div>
-          </div>
       </main>
 
 

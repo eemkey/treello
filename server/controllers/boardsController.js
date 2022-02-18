@@ -47,45 +47,30 @@ const getBoard = (req, res, next) => {
     });
 };
 
+const updateBoard = (req, res, next) => {
+  Board.findByIdAndUpdate(req.body.boardId, {$push: {lists: req.list._id}})
+  .then((list) => {
+    res.json({
+      list: req.list,
+    })
+  })
+}
+//req.body.list._id
+// req.body.boardId
+
+// addListToBoard(req)
+// find and update the board -- add that list._id to the list array
+
+
+// {
+//   "boardId": 1,
+//   "list": {
+//     "title": "My list"
+//   }
+// }
+
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
 exports.getBoard = getBoard;
-
-/*{
-  "_id": 1,
-  "title": "Web dev",
-  "createdAt": "2020-10-04T05:57:02.777Z",
-  "updatedAt": "2020-10-04T05:57:02.777Z",
-  "lists": [
-    {
-      "_id": 3,
-      "title": "CSS",
-      "boardId": 1,
-      "createdAt": "2020-10-04T06:53:39.302Z",
-      "updatedAt": "2020-10-04T06:53:39.302Z",
-      "position": 65535.0,
-      "cards": [
-        {
-          "_id": 7,
-          "title": "1",
-          "dueDate": null,
-          "labels": [
-            "red",
-            "purple"
-          ],
-          "description": "Selectors",
-          "listId": 3,
-          "boardId": 1,
-          "position": 65535.0,
-          "commentsCount": 0
-        }
-      ]
-    }
-  ]
-}
-*/
-
-// getBoard should have a populate method to replace specified paths in the
-// document with the document(s) from other collection(s)
-
-// - Handle the error when the board with the specified id doesn't exist.
+exports.updateBoard = updateBoard;

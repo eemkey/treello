@@ -5,8 +5,10 @@ function logError(errorResponse) {
   const response = errorResponse.response;
 
   if (response && response.data && response.data.error) {
+    // eslint-disable-next-line no-console
     console.error(`HTTP Error: ${response.data.error}`);
   } else {
+    // eslint-disable-next-line no-console
     console.error("Error: ", errorResponse);
   }
 }
@@ -38,7 +40,16 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
+  },
+  createList: function(newList, callback) {
+    console.log("newList - API", newList);
+    return axios.post(`${routes.CREATE_LIST_URL}`, {...newList})
+    .then(unwrapData)
+    .then(callback)
+    .catch(logError);
   }
 };
+
+
 
 export default apiClient;
