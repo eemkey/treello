@@ -29,21 +29,22 @@ const createBoard = (req, res, next) => {
   }
 };
 
-const getBoard = async (req, res, next) => {
-  const id = req.params.id;
-  const lists = await List.find({ boardId: id }).exec();
-
-  lists.forEach(async (list) => {
-    const cards = await Card.find({ listId: list._id }).exec();
-    list.cards = cards;
-  });
-
-  Board.findById(id).then((board) => {
-    board.lists = lists;
-    res.json({
-      board,
+const getBoard = (req, res, next) => {
+  Board.findById(req.params.id)
+    .populate({
+      path: "lists",
+      populate: {
+        path: "cards",
+      },
+    })
+    .then((board) => {
+      res.json({
+        board,
+      });
+    })
+    .catch((err) => {
+      next(new HttpError("Cannot find board", 404));
     });
-  });
 };
 
 exports.getBoards = getBoards;
