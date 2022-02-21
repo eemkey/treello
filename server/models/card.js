@@ -9,15 +9,27 @@ const CardSchema = new Schema(
       ref: "List",
       required: true,
     },
-    description: String,
+    description: {
+      type: String,
+      default: ""
+    },
     labels: [
       {
         type: String,
       },
     ],
-    archived: Boolean,
-    dueDate: Date,
-    completed: Boolean,
+    archived: {
+      type: Boolean,
+      default: false
+    },
+    dueDate: {
+      type: Date,
+      default: null
+      },
+    completed: {
+      type: Boolean,
+      default: false
+    },
     boardId: {
       type: Schema.Types.ObjectId,
       ref: "Board",
@@ -33,9 +45,12 @@ const CardSchema = new Schema(
         type: String,
       },
     ],
-    commentsCount: Number,
+    commentsCount: {
+      type: Number,
+      default: 0
+    }
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Card = mongoose.model("Card", CardSchema);

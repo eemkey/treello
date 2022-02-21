@@ -5,6 +5,12 @@ export default function cards(state = [], action) {
         return list.cards;
       }).flat();
     }
+    case "CREATE_CARD_SUCCESS": {
+      return state.concat(action.card.card);
+    }
+    case "GET_CARD_SUCCESS": {
+      return action.card
+    }
     default:
       return state;
   }

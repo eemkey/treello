@@ -12,6 +12,9 @@ export default function lists(state = [], action) {
     case "CREATE_LIST_SUCCESS": {
       return state.concat(action.list)
     }
+    case "EDIT_LIST_SUCCESS": {
+      return state.map(list => list._id === action.list._id ? action.list : list);
+    }
     default:
       return state;
   }

@@ -23,10 +23,6 @@ const AddAList = () => {
     setTitle("");
   }
 
-  // save or click on the X - set isadding to false
-  // handleSaveClick -> send the post request, update state, rerender component 
-      //and hide input field/save button, show add button
-
   const handleInputChange = (e) => {
     setTitle(e.target.value);
   }
@@ -43,10 +39,4 @@ const AddAList = () => {
   )
 }
 
-/* 
-When the create a list button tile is clicked, it should add 
-the selected class to the #new-list.new-list element. This will 
-display the form. When either the “Save” or “X” buttons are 
-clicked, the selected class should be removed.
-*/
 export default AddAList;

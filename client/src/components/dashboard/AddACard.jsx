@@ -1,11 +1,15 @@
-import React from "react";
+// import React from "react";
 
-const AddACard = () => {
-  return (
-    <div className="add-card-toggle" data-position="bottom">
-      Add a card...
-    </div>
-  )
-}
+// const AddACard = () => {
+//   const handleClick = () => {
+    
+//   }
 
-export default AddACard;
+//   return (
+//     <div onClick={} className="add-card-toggle" data-position="bottom">
+//       Add a card...
+//     </div>
+//   )
+// }
+
+// export default AddACard;

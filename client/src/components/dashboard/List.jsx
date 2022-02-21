@@ -1,50 +1,112 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import AddACard from "./AddACard";
-import Card from "./Card"
+import React, { useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Card from "./Card";
+import * as listActions from "../../actions/ListActions";
+import * as cardActions from "../../actions/CardActions";
 
-const List = ( {list} ) => {
-const cards = useSelector((state) => state.cards.filter(card => card.listId === list._id));
+const List = ({ list }) => {
+  const cards = useSelector((state) => {
+    return state.cards.filter((card) => card.listId === list._id)
+  }
+  );
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(list.title);
+  const [isAddingCard, setIsAddingCard] = useState(false);
+  const [cardTitle, setCardTitle] = useState("");
+  const dispatch = useDispatch();
+
+  const toggleAddingCard = (e) => {
+    e.preventDefault();
+    setIsAddingCard(!isAddingCard);
+  }
+
+  const createCard = useCallback((listId, title, callback) => {
+    dispatch(cardActions.createCard(listId, title, callback))
+  }, [dispatch])
+
+  const handleCreateCard = (e) => {
+    e.preventDefault();
+    createCard(list._id, cardTitle, () => toggleAddingCard(e))
+    setCardTitle("")
+  }
+
+  const handleCardTitle = (e) => {
+    setCardTitle(e.target.value);
+  }
+
+  const toggleIsEditing = (e) => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleInputChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleEditList = (e) => {
+    e.preventDefault();
+    editList(list._id, title, () => toggleIsEditing(e));
+  };
+
+  const editList = useCallback((listId, title, callback) => {
+    dispatch(listActions.editList(listId, title, callback))
+  }, [dispatch])
+  
   return (
-    <div className="list-wrapper">
-    <div className="list-background">
-      <div className="list">
-        <a className="more-icon sm-icon" href=""></a>
-        <div>
-          <p className="list-title">{list.title}</p>
-        </div>
-        <div className="add-dropdown add-top">
-          <div className="card"></div>
-          <a className="button">Add</a>
-          <i className="x-icon icon"></i>
-          <div className="add-options">
-            <span>...</span>
+    <div className={`list-wrapper ${isAddingCard ? "add-dropdown-active" : ""}`}>
+      <div className="list-background">
+        <div className="list">
+          <a className="more-icon sm-icon" href=""></a>
+          <div>
+            {isEditing ? (
+              <form onSubmit={handleEditList}>
+                <input
+                  type="text"
+                  className="list-title"
+                  value={title}
+                  onChange={handleInputChange}
+                  onBlur={handleEditList}
+                />
+              </form>
+            ) : (
+              <p onClick={toggleIsEditing} className="list-title">
+                {title}
+              </p>
+            )}
           </div>
-        </div>
-        <div id="cards-container" data-id="list-1-cards">
-            {cards.map(card => {
-              return <Card key={card._id} card={card}/>
+          <div className="add-dropdown add-top">
+            <div className="card"></div>
+            <a className="button">Add</a>
+            <i className="x-icon icon"></i>
+            <div className="add-options">
+              <span>...</span>
+            </div>
+          </div>
+          <div id="cards-container" data-id="list-1-cards">
+            {cards.map((card) => {
+              return <Card key={card._id} card={card} />;
             })}
-        </div>
-      
-        <div className="add-dropdown add-bottom">
-          <div className="card">
-            <div className="card-info"></div>
-            <textarea name="add-card"></textarea>
-            <div className="members"></div>
           </div>
-          <a className="button">Add</a>
-          <i className="x-icon icon"></i>
-          <div className="add-options">
-            <span>...</span>
+
+          <div className={`add-dropdown add-bottom ${isAddingCard ? "active-card" : ""}`}>
+            <div className="card">
+              <div className="card-info"></div>
+              <textarea name="add-card" onChange={handleCardTitle}></textarea>
+              <div className="members"></div>
+            </div>
+            <a className="button" onClick={handleCreateCard}>Add</a>
+            <i className="x-icon icon" onClick={toggleAddingCard}></i>
+            <div className="add-options">
+              <span>...</span>
+            </div>
           </div>
-        </div>
-        <AddACard />
+          <div onClick={toggleAddingCard} className="add-card-toggle" data-position="bottom">
+            Add a card...
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default List;

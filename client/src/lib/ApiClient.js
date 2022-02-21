@@ -42,14 +42,30 @@ const apiClient = {
       .catch(logError);
   },
   createList: function(newList, callback) {
-    console.log("newList - API", newList);
     return axios.post(`${routes.CREATE_LIST_URL}`, {...newList})
+    .then(unwrapData)
+    .then(callback)
+    .catch(logError);
+  },
+  editList: function(id, list, callback) {
+    return axios.put(`${routes.EDIT_LIST_URL}${id}`, {...list})
+    .then(unwrapData)
+    .then(callback)
+    .catch(logError);
+  },
+  createCard: function(card, callback) {
+    return axios.post(`${routes.CREATE_CARD_URL}`, card)
+    .then(unwrapData)
+    .then(callback)
+    .catch(logError);
+  },
+  getCard: function (id, callback) {
+    return axios.get(`${routes.GET_CARD_URL}${id}`)
     .then(unwrapData)
     .then(callback)
     .catch(logError);
   }
 };
-
 
 
 export default apiClient;
