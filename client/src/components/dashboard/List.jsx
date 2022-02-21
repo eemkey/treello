@@ -6,9 +6,8 @@ import * as cardActions from "../../actions/CardActions";
 
 const List = ({ list }) => {
   const cards = useSelector((state) => {
-    return state.cards.filter((card) => card.listId === list._id)
-  }
-  );
+    return state.cards.filter((card) => card.listId === list._id);
+  });
 
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(list.title);
@@ -19,21 +18,24 @@ const List = ({ list }) => {
   const toggleAddingCard = (e) => {
     e.preventDefault();
     setIsAddingCard(!isAddingCard);
-  }
+  };
 
-  const createCard = useCallback((listId, title, callback) => {
-    dispatch(cardActions.createCard(listId, title, callback))
-  }, [dispatch])
+  const createCard = useCallback(
+    (listId, title, callback) => {
+      dispatch(cardActions.createCard(listId, title, callback));
+    },
+    [dispatch]
+  );
 
   const handleCreateCard = (e) => {
     e.preventDefault();
-    createCard(list._id, cardTitle, () => toggleAddingCard(e))
-    setCardTitle("")
-  }
+    createCard(list._id, cardTitle, () => toggleAddingCard(e));
+    setCardTitle("");
+  };
 
   const handleCardTitle = (e) => {
     setCardTitle(e.target.value);
-  }
+  };
 
   const toggleIsEditing = (e) => {
     setIsEditing(!isEditing);
@@ -48,12 +50,17 @@ const List = ({ list }) => {
     editList(list._id, title, () => toggleIsEditing(e));
   };
 
-  const editList = useCallback((listId, title, callback) => {
-    dispatch(listActions.editList(listId, title, callback))
-  }, [dispatch])
-  
+  const editList = useCallback(
+    (listId, title, callback) => {
+      dispatch(listActions.editList(listId, title, callback));
+    },
+    [dispatch]
+  );
+
   return (
-    <div className={`list-wrapper ${isAddingCard ? "add-dropdown-active" : ""}`}>
+    <div
+      className={`list-wrapper ${isAddingCard ? "add-dropdown-active" : ""}`}
+    >
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -88,19 +95,29 @@ const List = ({ list }) => {
             })}
           </div>
 
-          <div className={`add-dropdown add-bottom ${isAddingCard ? "active-card" : ""}`}>
+          <div
+            className={`add-dropdown add-bottom ${
+              isAddingCard ? "active-card" : ""
+            }`}
+          >
             <div className="card">
               <div className="card-info"></div>
               <textarea name="add-card" onChange={handleCardTitle}></textarea>
               <div className="members"></div>
             </div>
-            <a className="button" onClick={handleCreateCard}>Add</a>
+            <a className="button" onClick={handleCreateCard}>
+              Add
+            </a>
             <i className="x-icon icon" onClick={toggleAddingCard}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div onClick={toggleAddingCard} className="add-card-toggle" data-position="bottom">
+          <div
+            onClick={toggleAddingCard}
+            className="add-card-toggle"
+            data-position="bottom"
+          >
             Add a card...
           </div>
         </div>

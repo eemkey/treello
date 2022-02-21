@@ -48,27 +48,14 @@ const getBoard = (req, res, next) => {
 };
 
 const updateBoard = (req, res, next) => {
-  Board.findByIdAndUpdate(req.body.boardId, {$push: {lists: req.list._id}})
-  .then((list) => {
+  Board.findByIdAndUpdate(req.body.boardId, {
+    $push: { lists: req.list._id },
+  }).then((list) => {
     res.json({
       list: req.list,
-    })
-  })
-}
-//req.body.list._id
-// req.body.boardId
-
-// addListToBoard(req)
-// find and update the board -- add that list._id to the list array
-
-
-// {
-//   "boardId": 1,
-//   "list": {
-//     "title": "My list"
-//   }
-// }
-
+    });
+  });
+};
 
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;

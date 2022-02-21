@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./lib/Store";
 import Application from "./components/Application";
-import "./index.scss"
+import "./index.scss";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
@@ -16,4 +16,3 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(document.createElement("div"))
   );
 });
-

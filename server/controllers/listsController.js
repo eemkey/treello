@@ -23,17 +23,18 @@ const createList = async (req, res, next) => {
 };
 
 const editList = async (req, res, next) => {
-  console.log(req.body)
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     List.findByIdAndUpdate(req.params.id, req.body.list, {
       new: true,
-    }).then(list => {
-      req.list = list;
-      next();
-    }).catch(e => {
-      next(new HttpError("the id does not exist", 404));
-    });
+    })
+      .then((list) => {
+        req.list = list;
+        next();
+      })
+      .catch((e) => {
+        next(new HttpError("the id does not exist", 404));
+      });
   } else {
     return next(new HttpError("the title or position field(s) are empty", 422));
   }
@@ -44,13 +45,14 @@ const sendList = (req, res, next) => {
 };
 
 const updateList = (req, res, next) => {
-  List.findByIdAndUpdate(req.card.listId, {$push: {cards: req.card._id}})
-  .then((card) => {
+  List.findByIdAndUpdate(req.card.listId, {
+    $push: { cards: req.card._id },
+  }).then((card) => {
     res.json({
       card: req.card,
-    })
-  })
-}
+    });
+  });
+};
 
 exports.createList = createList;
 exports.editList = editList;

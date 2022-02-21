@@ -11,7 +11,7 @@ const CardSchema = new Schema(
     },
     description: {
       type: String,
-      default: ""
+      default: "",
     },
     labels: [
       {
@@ -20,15 +20,15 @@ const CardSchema = new Schema(
     ],
     archived: {
       type: Boolean,
-      default: false
+      default: false,
     },
     dueDate: {
       type: Date,
-      default: null
-      },
+      default: null,
+    },
     completed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     boardId: {
       type: Schema.Types.ObjectId,
@@ -47,8 +47,8 @@ const CardSchema = new Schema(
     ],
     commentsCount: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   { timestamps: true }
 );
@@ -56,16 +56,3 @@ const CardSchema = new Schema(
 const Card = mongoose.model("Card", CardSchema);
 
 module.exports = Card;
-
-// {
-//   "description": "",
-//   "labels": [],
-//   "position": 65535.0,
-//   "archived": false,
-//   "dueDate": null,
-//   "completed": false,
-//   "boardId": 1,
-//   "comments": [],
-//   "actions": []
-//   "commentsCount": 0
-// }

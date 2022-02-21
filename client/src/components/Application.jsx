@@ -20,22 +20,22 @@ const Application = () => {
     <div>
       <TopNav />
       <Switch>
-      <Route path="/" exact component={BoardsDashboardContainer} />
-      <Route path="/boards/:id" component={Board} />
-      <Route path="/ui" exact component={UISection} />
-      <Route path="/ui/allBoards" component={AllBoards} />
-      <Route path="/ui/cardArchived" component={CardArchived} />
-      <Route
-        path="/ui/cardEditingDescription"
-        component={CardEditingDescription}
-      />
-      <Route path="/ui/card" component={Card} />
-      <Route path="/ui/copyCardPopover" component={CopyCardPopover} />
-      <Route path="/ui/createBoard" component={CreateBoard} />
-      <Route path="/ui/dueDatePopover" component={DueDatePopover} />
-      <Route path="/ui/labelsPopover" component={LabelsPopover} />
-      <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
-      <Route path="/ui/singleBoard" component={SingleBoard} />
+        <Route path="/" exact component={BoardsDashboardContainer} />
+        <Route path="/boards/:id" component={Board} />
+        <Route path="/ui" exact component={UISection} />
+        <Route path="/ui/allBoards" component={AllBoards} />
+        <Route path="/ui/cardArchived" component={CardArchived} />
+        <Route
+          path="/ui/cardEditingDescription"
+          component={CardEditingDescription}
+        />
+        <Route path="/ui/card" component={Card} />
+        <Route path="/ui/copyCardPopover" component={CopyCardPopover} />
+        <Route path="/ui/createBoard" component={CreateBoard} />
+        <Route path="/ui/dueDatePopover" component={DueDatePopover} />
+        <Route path="/ui/labelsPopover" component={LabelsPopover} />
+        <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
+        <Route path="/ui/singleBoard" component={SingleBoard} />
       </Switch>
     </div>
   );

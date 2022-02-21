@@ -13,8 +13,8 @@ const createCard = async (req, res, next) => {
     } else {
       let newCard = {
         listId: req.body.listId,
-        title: req.body.card.title, 
-        boardId: list.boardId
+        title: req.body.card.title,
+        boardId: list.boardId,
       };
       Card.create(newCard).then((card) => {
         req.card = card;
