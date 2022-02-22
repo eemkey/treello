@@ -17,6 +17,31 @@ export function getCardSuccess(card) {
   return { type: types.GET_CARD_SUCCESS, card };
 }
 
+export function editCardRequest() {
+  return { type: types.EDIT_CARD_REQUEST };
+}
+
+export function editCardSuccess(card) {
+  return { type: types.EDIT_CARD_SUCCESS, card };
+}
+
+export function editCard(id, card, callback) {
+  return function (dispatch) {
+    dispatch(editCardRequest())
+    let editedCard = {
+      card: {...card }
+    }
+    apiClient.editCard(id, editedCard, (data) => {
+      dispatch(editCardSuccess(data))
+
+      if (callback) {
+        callback()
+      }
+    })
+  }
+}
+
+
 export function getCard(id) {
   return function (dispatch) {
     dispatch(getCardRequest());

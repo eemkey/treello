@@ -1,24 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as actions from "../../actions/BoardActions";
 import ExistingLists from "./ExistingLists";
 import AddAList from "./AddAList";
+import CardModal from "./CardModal";
 
 const Board = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const board = useSelector((state) => state.boards[0]);
+  const [isViewingCard, setIsViewingCard] = useState(false);
+  const [viewingCardId, setViewingCardId] = useState("");
 
   useEffect(() => {
     dispatch(actions.fetchBoard(id));
   }, [dispatch, id]);
+
+
+  const handleOpenCard = (cardId) => {
+    toggleIsViewingCard();
+    setViewingCardId(cardId);
+  }
+
+  const toggleIsViewingCard = () => {
+    setIsViewingCard(!isViewingCard);
+  }
+  const closeModal = () => {
+    toggleIsViewingCard();
+    setViewingCardId("");
+    setIsViewingCard(false);
+  }
 
   if (!board) {
     return null;
   } else {
     return (
       <>
+      {isViewingCard ? null :
+        <div>
         <header>
           <ul>
             <li id="title">{board.title}</li>
@@ -35,7 +55,7 @@ const Board = () => {
 
         <main>
           <div id="list-container" className="list-container">
-            <ExistingLists />
+            <ExistingLists onOpenCard={handleOpenCard} />
             <AddAList />
           </div>
         </main>
@@ -133,7 +153,12 @@ const Board = () => {
             </div>
           </div>
         </div>
-        <div id="modal-container"></div>
+        </div>
+       }
+        <div id="modal-container">
+          {isViewingCard ? <CardModal cardId={viewingCardId} onClose={closeModal} /> : null}
+        </div>
+
         <div id="dropdown-container"></div>
       </>
     );

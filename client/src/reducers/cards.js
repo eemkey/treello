@@ -13,6 +13,10 @@ export default function cards(state = [], action) {
     case "GET_CARD_SUCCESS": {
       return action.card;
     }
+    case "EDIT_CARD_SUCCESS": {
+      console.log("edit card success", action.card);
+      return state.map(card => card._id === action.card_id ? action.card : card)
+    }
     default:
       return state;
   }

@@ -42,6 +42,23 @@ const getCard = (req, res, next) => {
     });
 };
 
+const addCommentToCard = (req, res, next) => {
+  Card.findByIdAndUpdate(req.body.cardId, {
+    $push: { comments: req.comment._id },
+  }).then(() => {
+     next();
+  });
+};
+
+const updateCard = (req, res, next) => {
+  Card.findByIdAndUpdate(req.params.id, req.body.card, { new: true })
+  .then((card) => {
+    res.json(card);
+  })
+}
+
 exports.createCard = createCard;
 exports.getCard = getCard;
 exports.sendCard = sendCard;
+exports.updateCard = updateCard;
+exports.addCommentToCard = addCommentToCard;
