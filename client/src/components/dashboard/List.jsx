@@ -4,7 +4,7 @@ import Card from "./Card";
 import * as listActions from "../../actions/ListActions";
 import * as cardActions from "../../actions/CardActions";
 
-const List = ({ list }) => {
+const List = ({ list, onOpenCard }) => {
   const cards = useSelector((state) => {
     return state.cards.filter((card) => card.listId === list._id);
   });
@@ -37,7 +37,7 @@ const List = ({ list }) => {
     setCardTitle(e.target.value);
   };
 
-  const toggleIsEditing = (e) => {
+  const toggleIsEditing = () => {
     setIsEditing(!isEditing);
   };
 
@@ -91,7 +91,7 @@ const List = ({ list }) => {
           </div>
           <div id="cards-container" data-id="list-1-cards">
             {cards.map((card) => {
-              return <Card key={card._id} card={card} />;
+              return <Card key={card._id} card={card} onOpenCard={onOpenCard} />;
             })}
           </div>
 

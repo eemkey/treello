@@ -1,11 +1,22 @@
 import React from "react";
 
-const Card = ({ card }) => {
-  let dueDate = new Date(card.dueDate).toDateString();
-  dueDate = dueDate.split(" ").slice(1, 3).join(" ");
+const Card = ({ card, onOpenCard }) => {
+  const formatDueDate = () => {
+    if (card.dueDate) {
+      let dueDate = new Date(card.dueDate).toDateString();
+      return dueDate.split(" ").slice(1, 3).join(" ");
+    } else {
+      return "No Due Date";
+    }
+  }
+
+  const handleOpenCard = (e) => {
+    e.preventDefault;
+    onOpenCard(card._id);
+  }
+
   return (
-    <div id="cards-container" data-id="list-1-cards">
-      <div className="card-background">
+      <div onClick={handleOpenCard} className="card-background">
         <div className="card">
           <i className="edit-toggle edit-icon sm-icon"></i>
           <div className="card-info">
@@ -19,14 +30,13 @@ const Card = ({ card }) => {
           </div>
           <div className="card-icons">
             <i className="clock-icon sm-icon overdue-recent completed">
-              {dueDate}
+              {formatDueDate()}
             </i>
             <i className="description-icon sm-icon"></i>
             <i className="comment-icon sm-icon"></i>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

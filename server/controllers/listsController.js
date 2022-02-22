@@ -44,7 +44,7 @@ const sendList = (req, res, next) => {
   return res.json(req.list);
 };
 
-const updateList = (req, res, next) => {
+const addCardToList = (req, res, next) => {
   List.findByIdAndUpdate(req.card.listId, {
     $push: { cards: req.card._id },
   }).then((card) => {
@@ -57,4 +57,4 @@ const updateList = (req, res, next) => {
 exports.createList = createList;
 exports.editList = editList;
 exports.sendList = sendList;
-exports.updateList = updateList;
+exports.addCardToList = addCardToList;
