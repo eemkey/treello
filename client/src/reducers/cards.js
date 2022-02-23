@@ -10,11 +10,10 @@ export default function cards(state = [], action) {
     case "CREATE_CARD_SUCCESS": {
       return state.concat(action.card.card);
     }
-    case "GET_CARD_SUCCESS": {
-      return action.card;
-    }
+    // case "GET_CARD_SUCCESS": {
+    //   return [action.card];
+    // }
     case "EDIT_CARD_SUCCESS": {
-      console.log("edit card success", action.card);
       return state.map(card => card._id === action.card_id ? action.card : card)
     }
     default:
