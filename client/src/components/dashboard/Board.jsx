@@ -12,29 +12,12 @@ const Board = () => {
   const state = useSelector((state) => state);
   const boardId = findBoardId(id, state);
   const board = useSelector((state) => state.boards.find(b => b._id === boardId));
-// const [isViewingCard, setIsViewingCard] = useState(false);
-  const [viewingCardId, setViewingCardId] = useState("");
+  const [addFormListId, setAddFormListId] = useState("");
 
   useEffect(() => {
     if (!boardId) return
     dispatch(actions.fetchBoard(boardId));
   }, [dispatch, boardId]);
-
-
-
-  const handleOpenCard = (cardId) => {
-    toggleIsViewingCard();
-    setViewingCardId(cardId);
-  }
-
-  const toggleIsViewingCard = () => {
-    setIsViewingCard(!isViewingCard);
-  }
-  const closeModal = () => {
-    toggleIsViewingCard();
-    setViewingCardId("");
-    setIsViewingCard(false);
-  }
 
   if (!board) {
     return null;
@@ -57,7 +40,7 @@ const Board = () => {
 
         <main>
           <div id="list-container" className="list-container">
-            <ExistingLists onOpenCard={handleOpenCard} />
+            <ExistingLists addFormListId={addFormListId} setAddFormListId={setAddFormListId}/>
             <AddAList />
           </div>
         </main>

@@ -4,22 +4,29 @@ import Card from "./Card";
 import * as listActions from "../../actions/ListActions";
 import * as cardActions from "../../actions/CardActions";
 
-const List = ({ list, onOpenCard }) => {
+const List = ({ list, addFormListId, setAddFormListId }) => {
   const cards = useSelector((state) => {
     return state.cards.filter((card) => card.listId === list._id);
   });
 
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(list.title);
-  const [isAddingCard, setIsAddingCard] = useState(false);
   const [cardTitle, setCardTitle] = useState("");
   const dispatch = useDispatch();
 
-  const toggleAddingCard = (e) => {
+  const addCard = (e) => {
     e.preventDefault();
-    setIsAddingCard(!isAddingCard);
+    setAddFormListId(list._id);
   };
 
+  const closeCardForm = (e) => {
+    e.preventDefault();
+    setAddFormListId("");
+  }
+
+  const isAdding = () => {
+    return list._id === addFormListId;
+  }
   const createCard = useCallback(
     (listId, title, callback) => {
       dispatch(cardActions.createCard(listId, title, callback));
@@ -31,6 +38,7 @@ const List = ({ list, onOpenCard }) => {
     e.preventDefault();
     createCard(list._id, cardTitle, () => toggleAddingCard(e));
     setCardTitle("");
+    setAddFormListId("");
   };
 
   const handleCardTitle = (e) => {
@@ -59,7 +67,7 @@ const List = ({ list, onOpenCard }) => {
 
   return (
     <div
-      className={`list-wrapper ${isAddingCard ? "add-dropdown-active" : ""}`}
+      className={`list-wrapper ${isAdding() ? "add-dropdown-active" : ""}`}
     >
       <div className="list-background">
         <div className="list">
@@ -91,13 +99,13 @@ const List = ({ list, onOpenCard }) => {
           </div>
           <div id="cards-container" data-id="list-1-cards">
             {cards.map((card) => {
-              return <Card key={card._id} card={card} onOpenCard={onOpenCard} />;
+              return <Card key={card._id} card={card} />;
             })}
           </div>
 
           <div
             className={`add-dropdown add-bottom ${
-              isAddingCard ? "active-card" : ""
+              isAdding() ? "active-card" : ""
             }`}
           >
             <div className="card">
@@ -108,13 +116,13 @@ const List = ({ list, onOpenCard }) => {
             <a className="button" onClick={handleCreateCard}>
               Add
             </a>
-            <i className="x-icon icon" onClick={toggleAddingCard}></i>
+            <i className="x-icon icon" onClick={closeCardForm}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
           <div
-            onClick={toggleAddingCard}
+            onClick={addCard}
             className="add-card-toggle"
             data-position="bottom"
           >

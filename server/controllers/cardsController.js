@@ -32,7 +32,6 @@ const sendCard = (req, res, next) => {
 
 const getCard = (req, res, next) => {
   Card.findById(req.params.id)
-  .populate('listId')
     .then((card) => {
       res.json(card);
     })

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCard } from "../../actions/CardActions";
+import * as cardActions from "../../actions/CardActions";
 
 const CardModal = () => {
   let history = useHistory();
@@ -12,19 +12,21 @@ const CardModal = () => {
     return state.cards.filter((card) => card._id === id);
   })[0];
 
-  const list = useSelector((state) => {
-    return state.lists[0];
+  const lists = useSelector((state) => {
+    return state.lists;
   });
 
-  // const list = useSelector((state) => {
-  //   return state.lists.filter((list => list._id === card.listId);
-  // });
+  let list;
+
+  if (card) {
+    list = lists.find(l => l._id === card.listId);
+  }
 
   useEffect(() => {
-    dispatch(getCard(id))
+    dispatch(cardActions.getCard(id))
   }, [dispatch, id])
 
-  
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [comments, setComment] = useState("");
@@ -69,6 +71,16 @@ const CardModal = () => {
     history.push(`/boards/${card.boardId}`)
   }
 
+  const updateTitle = useCallback((cardId, updatedCard, callback) => {
+    dispatch(cardActions.editCard(cardId, updatedCard, callback))
+  }, [dispatch])
+
+  const handleUpdateTitle = (e) => {
+    e.preventDefault();
+    updateTitle(card._id, {title})
+  }
+
+
   useEffect(() => {
     const handleEscKey = e => {
       if (e.key === "Escape") {
@@ -83,7 +95,12 @@ const CardModal = () => {
     };
   }, []);
 
-  if (!card) {
+  const handleTitleChange = (e) => {
+    e.preventDefault();
+    setTitle(e.target.value)
+  }
+
+  if (!card || !list) {
     return null;
   } else {
     return (
@@ -93,8 +110,7 @@ const CardModal = () => {
         <i onClick={exitModal} className="x-icon icon close-modal"></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
+          <textarea className="list-title" style={{ height: "45px" }} onBlur={handleUpdateTitle} defaultValue={card.title} onChange={handleTitleChange}>
           </textarea>
           <p>
             in list <a className="link">{list.title}</a>
@@ -146,8 +162,7 @@ const CardModal = () => {
                 <p>Description</p>
                 {isEditingDescription ? 
                 <div>
-                  <textarea onChange={handleDescriptionChange} className="textarea-toggle" rows="1" autoFocus>
-                    {card.description}
+                  <textarea onChange={handleDescriptionChange} className="textarea-toggle" rows="1" autoFocus defaultValue={card.description}>
                   </textarea>
                   <div className="button" value="Save">
                     Save
