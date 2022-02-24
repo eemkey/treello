@@ -71,15 +71,24 @@ const CardModal = () => {
     history.push(`/boards/${card.boardId}`)
   }
 
-  const updateTitle = useCallback((cardId, updatedCard, callback) => {
+  const updateCard = useCallback((cardId, updatedCard, callback) => {
     dispatch(cardActions.editCard(cardId, updatedCard, callback))
   }, [dispatch])
 
   const handleUpdateTitle = (e) => {
     e.preventDefault();
-    updateTitle(card._id, {title})
+    if (title !== "") {
+      updateCard(card._id, {title})
+    }
   }
 
+  const handleUpdateDescription = (e) => {
+    e.preventDefault();
+    if (description !== card.description) {
+      updateCard(card._id, {description});
+    }
+    toggleIsEditingDescription();
+  }
 
   useEffect(() => {
     const handleEscKey = e => {
@@ -98,6 +107,12 @@ const CardModal = () => {
   const handleTitleChange = (e) => {
     e.preventDefault();
     setTitle(e.target.value)
+  }
+
+  const handleOpenDescription = (e) => {
+    e.preventDefault();
+    setDescription(card.description);
+    toggleIsEditingDescription();
   }
 
   if (!card || !list) {
@@ -162,14 +177,13 @@ const CardModal = () => {
                 <p>Description</p>
                 {isEditingDescription ? 
                 <div>
-                  <textarea onChange={handleDescriptionChange} className="textarea-toggle" rows="1" autoFocus defaultValue={card.description}>
-                  </textarea>
-                  <div className="button" value="Save">
+                  <textarea onChange={handleDescriptionChange} className="textarea-toggle" rows="1" autoFocus defaultValue={card.description}></textarea>
+                  <div onClick={handleUpdateDescription} className="button" value="Save">
                     Save
                   </div>
                   <i className="x-icon icon" onClick={toggleIsEditingDescription}></i>
                 </div> 
-                : <span id="description-edit" className="link" onClick={toggleIsEditingDescription}>
+                : <span id="description-edit" className="link" onClick={handleOpenDescription}>
                     Edit
                   </span> }
                   <p className="textarea-overlay">

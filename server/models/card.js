@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const CardSchema = new Schema(
   {
-    title: String,
+    title: {
+      type: String,
+      required: true
+    },
     listId: {
       type: Schema.Types.ObjectId,
       ref: "List",
