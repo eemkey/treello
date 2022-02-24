@@ -1,17 +1,32 @@
-import React, {useState} from "react";
-import { useSelector } from "react-redux";
-const CardModal = ({ cardId, onClose }) => {
+import React, {useEffect, useState} from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCard } from "../../actions/CardActions";
+
+const CardModal = () => {
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const id = useParams().id;
 
   const card = useSelector((state) => {
-    return state.cards.filter((card) => card._id === cardId);
+    return state.cards.filter((card) => card._id === id);
   })[0];
 
   const list = useSelector((state) => {
-    return state.lists.filter((list) => list._id === card.listId)
-  })[0];
+    return state.lists[0];
+  });
 
-  const [title, setTitle] = useState(card.title);
-  const [description, setDescription] = useState(card.description);
+  // const list = useSelector((state) => {
+  //   return state.lists.filter((list => list._id === card.listId);
+  // });
+
+  useEffect(() => {
+    dispatch(getCard(id))
+  }, [dispatch, id])
+
+  
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [comments, setComment] = useState("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
  
@@ -50,15 +65,36 @@ const CardModal = ({ cardId, onClose }) => {
     setDescription(e.target.value);
   }
 
-  return (
-    <>
-      <div className="screen"></div>
-      <div id="modal">
-        <i onClick={onClose} className="x-icon icon close-modal"></i>
+  const exitModal = () => {
+    history.push(`/boards/${card.boardId}`)
+  }
+
+  useEffect(() => {
+    const handleEscKey = e => {
+      if (e.key === "Escape") {
+        exitModal();
+      }
+    }
+  
+    window.addEventListener('keydown', handleEscKey);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscKey);
+    };
+  }, []);
+
+  if (!card) {
+    return null;
+  } else {
+    return (
+    <div id="modal-container">
+      <div onClick={exitModal} className="screen"></div>
+      <div onClick={(e) => e.stopPropagation()} id="modal">
+        <i onClick={exitModal} className="x-icon icon close-modal"></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
           <textarea className="list-title" style={{ height: "45px" }}>
-            {title}
+            {card.title}
           </textarea>
           <p>
             in list <a className="link">{list.title}</a>
@@ -122,7 +158,7 @@ const CardModal = ({ cardId, onClose }) => {
                     Edit
                   </span> }
                   <p className="textarea-overlay">
-                    {description}
+                    {card.description}
                   </p>
                   <p id="description-edit-options" className="hidden">
                     You have unsaved edits on this field.{" "}
@@ -289,8 +325,9 @@ const CardModal = ({ cardId, onClose }) => {
           </ul>
         </aside>
       </div>
-    </>
+    </div>
   );
+  }
 };
 
 export default CardModal;

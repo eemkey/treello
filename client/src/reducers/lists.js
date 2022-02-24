@@ -14,6 +14,9 @@ export default function lists(state = [], action) {
     case "EDIT_LIST_SUCCESS": {
       return state.map(list => list._id === action.list._id ? action.list : list);
     }
+    // case "GET_CARD_SUCCESS": {
+    //   return [action.card.listId];
+    // }
     default:
       return state;
   }
