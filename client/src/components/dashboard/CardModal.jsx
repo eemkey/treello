@@ -72,9 +72,9 @@ const CardModal = () => {
     history.push(`/boards/${card.boardId}`);
   };
 
-  const updateCard = useCallback(
-    (cardId, updatedCard, callback) => {
-      dispatch(cardActions.editCard(cardId, updatedCard, callback));
+  const editCard = useCallback(
+    (cardId, editedCard, callback) => {
+      dispatch(cardActions.editCard(cardId, editedCard, callback));
     },
     [dispatch]
   );
@@ -82,14 +82,14 @@ const CardModal = () => {
   const handleUpdateTitle = (e) => {
     e.preventDefault();
     if (title !== "") {
-      updateCard(card._id, { title });
+      editCard(card._id, { title });
     }
   };
 
   const handleUpdateDescription = (e) => {
     e.preventDefault();
     if (description !== card.description) {
-      updateCard(card._id, { description });
+      editCard(card._id, { description });
     }
     toggleIsEditingDescription();
   };
@@ -119,6 +119,10 @@ const CardModal = () => {
     toggleIsEditingDescription();
   };
 
+  const handleArchiveCard = (e) => {
+    editCard(card._id, { archived: !card.archived });
+  };
+
   if (!card || !list) {
     return null;
   } else {
@@ -127,6 +131,11 @@ const CardModal = () => {
         <div onClick={exitModal} className="screen"></div>
         <div onClick={(e) => e.stopPropagation()} id="modal">
           <i onClick={exitModal} className="x-icon icon close-modal"></i>
+          {card.archived ? (
+            <div className="archived-banner">
+              <i className="file-icon icon"></i>This card is archived.
+            </div>
+          ) : null}
           <header>
             <i className="card-icon icon .close-modal"></i>
             <textarea
@@ -253,9 +262,20 @@ const CardModal = () => {
                 <i className="check-icon sm-icon"></i>
               </li>
               <hr />
-              <li className="archive-button">
-                <i className="file-icon sm-icon "></i>Archive
-              </li>
+              {card.archived ? (
+                <div>
+                  <li className="unarchive-button">
+                    <i className="send-icon sm-icon"></i>Send to board
+                  </li>
+                  <li className="red-button">
+                    <i className="minus-icon sm-icon"></i>Delete
+                  </li>
+                </div>
+              ) : (
+                <li className="archive-button" onClick={handleArchiveCard}>
+                  <i className="file-icon sm-icon "></i>Archive
+                </li>
+              )}
             </ul>
             <ul className="light-list">
               <li className="not-implemented">Share and more...</li>

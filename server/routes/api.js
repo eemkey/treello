@@ -40,4 +40,6 @@ router.post(
   commentsController.sendComment
 );
 
+router.delete("/cards/:id", cardsController.deleteCard)
+
 module.exports = router;

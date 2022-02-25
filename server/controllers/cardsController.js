@@ -2,6 +2,7 @@ const Card = require("../models/card");
 const List = require("../models/list");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+const Comment = require("../models/comment");
 
 const createCard = async (req, res, next) => {
   const errors = validationResult(req);
@@ -59,8 +60,25 @@ const updateCard = (req, res, next) => {
   );
 };
 
+const deleteCard = (req, res, next) => {
+  let id = req.params.id;
+  Card.pre('remove', function(next) {
+    Comment.remove({cardId: id}).exec();
+    next();
+  })
+}
+
+
+
+// clientSchema.pre('remove', function(next) {
+//   Sweepstakes.remove({client_id: this._id}).exec(); {cardId: id}
+//   next();
+// });
+
+
 exports.createCard = createCard;
 exports.getCard = getCard;
 exports.sendCard = sendCard;
 exports.updateCard = updateCard;
 exports.addCommentToCard = addCommentToCard;
+exports.deleteCard = deleteCard;

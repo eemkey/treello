@@ -5,7 +5,6 @@ export default function comments(state = [], action) {
       return state.concat(action.comment);
     }
     case "GET_CARD_SUCCESS": {
-      console.log("action.card.comments", action.card.comments);
       return action.card.comments;
     }
     default:

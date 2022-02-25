@@ -21,19 +21,19 @@ const Comment = ({ comment }) => {
   return (
     <>
       <div className="member-container">
-        <div className="card-member">T1</div>
+        
       </div>
       <h3>Team 1</h3>
-      {/* <div className="comment static-comment">
+      <div className="comment static-comment">
          <span>{comment.text}</span> 
-      </div>  */}
+      </div>
 
-      <div className="comment">
+      {/*<div className="comment">
         <label>
           <textarea required="" rows="1">
             {comment.text}
           </textarea>
-          {/* <div>
+           <div>
             <a className="light-button card-icon sm-icon"></a>
             <a className="light-button smiley-icon sm-icon"></a>
             <a className="light-button email-icon sm-icon"></a>
@@ -46,9 +46,9 @@ const Comment = ({ comment }) => {
               value="Save"
             />
             <i className="x-icon icon"></i>
-          </div> */}
+          </div> 
         </label>
-      </div>
+      </div>*/}
       <small>
         {formatDate()} - <span className="link">Edit</span> -{" "}
         <span className="link">Delete</span>

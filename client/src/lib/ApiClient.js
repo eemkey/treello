@@ -78,7 +78,6 @@ const apiClient = {
       .catch(logError);
   },
   createComment: function (comment, callback) {
-    console.log("api client", "comment", comment);
     return axios
       .post(`${routes.CREATE_COMMENT_URL}`, comment)
       .then(unwrapData)
@@ -88,22 +87,3 @@ const apiClient = {
 };
 
 export default apiClient;
-
-/* 
-const createComment = async (req, res, next) => {
-  const cardId = req.body.cardId;
-  const card = await Card.findById(cardId);
-  if (!card) {
-    return next(new HttpError("The card doesn't exist", 404));
-  } else {
-    let newComment = {
-      cardId: req.body.cardId,
-      text: req.body.comment.text,
-    };
-    Comment.create(newComment).then(comment => {
-    req.comment = comment;
-      next();
-    });
-   }
-};
-*/
