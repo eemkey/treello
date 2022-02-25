@@ -11,18 +11,25 @@ const Card = ({ card }) => {
     }
   };
 
+  const labels = () => {
+    if (card.labels.length === 0) {
+      return null;
+    } else {
+      return card.labels.map((color) => {
+        return (
+          <div className={`card-label ${color} colorblindable`}></div>     
+        );
+      });
+    }
+  };
+
   return (
     <div className="card-background">
       <Link to={`/cards/${card._id}`}>
         <div className="card">
           <i className="edit-toggle edit-icon sm-icon"></i>
           <div className="card-info">
-            <div className="card-label green colorblindable"></div>
-            <div className="card-label yellow colorblindable"></div>
-            <div className="card-label red colorblindable"></div>
-            <div className="card-label orange colorblindable"></div>
-            <div className="card-label blue colorblindable"></div>
-            <div className="card-label purple colorblindable"></div>
+            {labels()}
             <p>{card.title}</p>
           </div>
           <div className="card-icons">

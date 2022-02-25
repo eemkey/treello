@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as cardActions from "../../actions/CardActions";
 import AddAComment from "./AddAComent";
 import Comments from "./Comments";
+import LabelsPopover from "./LabelsPopover";
 
 const CardModal = () => {
   let history = useHistory();
@@ -32,6 +33,11 @@ const CardModal = () => {
   const [description, setDescription] = useState("");
   const [comments, setComment] = useState("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [showLabelsPopover, setShowLabelsPopover] = useState(false);
+
+  const toggleShowLabelsPopover = (e) => {
+    setShowLabelsPopover(!showLabelsPopover);
+  };
 
   const pastDue = () => {
     if (card.dueDate === null) return null;
@@ -58,6 +64,20 @@ const CardModal = () => {
 
     dueDate = dueDate.split(" ").slice(1, 3).join(" ");
     return `${dueDate} ${dueTime}`;
+  };
+
+  const labels = () => {
+    if (card.labels.length === 0) {
+      return null;
+    } else {
+      return card.labels.map((color) => {
+        return (
+          <div className="member-container">
+            <div className={`${color} label colorblindable`}></div>
+          </div>
+        );
+      });
+    }
   };
 
   const toggleIsEditingDescription = () => {
@@ -156,26 +176,9 @@ const CardModal = () => {
                 <ul className="modal-details-list">
                   <li className="labels-section">
                     <h3>Labels</h3>
+                    {labels()}
                     <div className="member-container">
-                      <div className="green label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="yellow label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="orange label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="blue label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="purple label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="red label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <i className="plus-icon sm-icon"></i>
+                      <i onClick={toggleShowLabelsPopover} className="plus-icon sm-icon"></i>
                     </div>
                   </li>
                   <li className="due-date-section">
@@ -245,9 +248,15 @@ const CardModal = () => {
               <li className="member-button">
                 <i className="person-icon sm-icon"></i>Members
               </li>
-              <li className="label-button">
+              <li onClick={toggleShowLabelsPopover} className="label-button">
                 <i className="label-icon sm-icon"></i>Labels
               </li>
+              {showLabelsPopover ? (
+                <LabelsPopover
+                  toggleShowLabelsPopover={toggleShowLabelsPopover}
+                  card={card}
+                />
+              ) : null}
               <li className="checklist-button">
                 <i className="checklist-icon sm-icon"></i>Checklist
               </li>
