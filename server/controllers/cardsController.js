@@ -32,6 +32,9 @@ const sendCard = (req, res, next) => {
 
 const getCard = (req, res, next) => {
   Card.findById(req.params.id)
+    .populate({
+      path: "comments",
+    })
     .then((card) => {
       res.json(card);
     })
@@ -44,16 +47,17 @@ const addCommentToCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.body.cardId, {
     $push: { comments: req.comment._id },
   }).then(() => {
-     next();
+    next();
   });
 };
 
 const updateCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.id, req.body.card, { new: true })
-  .then((card) => {
-    res.json(card);
-  })
-}
+  Card.findByIdAndUpdate(req.params.id, req.body.card, { new: true }).then(
+    (card) => {
+      res.json(card);
+    }
+  );
+};
 
 exports.createCard = createCard;
 exports.getCard = getCard;

@@ -34,12 +34,10 @@ router.get("/cards/:id", cardsController.getCard);
 router.put("/cards/:id", cardsController.updateCard);
 
 router.post(
-  "/comments", 
-  commentsController.createComment, 
-  cardsController.addCommentToCard, 
+  "/comments",
+  commentsController.createComment,
+  cardsController.addCommentToCard,
   commentsController.sendComment
 );
-
-
 
 module.exports = router;

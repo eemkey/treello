@@ -22,11 +22,11 @@ const List = ({ list, addFormListId, setAddFormListId }) => {
   const closeCardForm = (e) => {
     e.preventDefault();
     setAddFormListId("");
-  }
+  };
 
   const isAdding = () => {
     return list._id === addFormListId;
-  }
+  };
   const createCard = useCallback(
     (listId, title, callback) => {
       dispatch(cardActions.createCard(listId, title, callback));
@@ -36,7 +36,7 @@ const List = ({ list, addFormListId, setAddFormListId }) => {
 
   const handleCreateCard = (e) => {
     e.preventDefault();
-    createCard(list._id, cardTitle, () => toggleAddingCard(e));
+    createCard(list._id, cardTitle);
     setCardTitle("");
     setAddFormListId("");
   };
@@ -66,9 +66,7 @@ const List = ({ list, addFormListId, setAddFormListId }) => {
   );
 
   return (
-    <div
-      className={`list-wrapper ${isAdding() ? "add-dropdown-active" : ""}`}
-    >
+    <div className={`list-wrapper ${isAdding() ? "add-dropdown-active" : ""}`}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>

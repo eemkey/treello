@@ -27,20 +27,19 @@ export function editCardSuccess(card) {
 
 export function editCard(id, card, callback) {
   return function (dispatch) {
-    dispatch(editCardRequest())
+    dispatch(editCardRequest());
     let editedCard = {
-      card: {...card }
-    }
+      card: { ...card },
+    };
     apiClient.editCard(id, editedCard, (data) => {
-      dispatch(editCardSuccess(data))
+      dispatch(editCardSuccess(data));
 
       if (callback) {
-        callback()
+        callback();
       }
-    })
-  }
+    });
+  };
 }
-
 
 export function getCard(id) {
   return function (dispatch) {

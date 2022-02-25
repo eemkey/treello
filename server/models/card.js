@@ -5,7 +5,7 @@ const CardSchema = new Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     listId: {
       type: Schema.Types.ObjectId,
@@ -41,7 +41,7 @@ const CardSchema = new Schema(
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Comment"
+        ref: "Comment",
       },
     ],
     actions: [

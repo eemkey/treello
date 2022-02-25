@@ -7,10 +7,11 @@ const CommentSchema = new Schema(
     cardId: {
       type: Schema.Types.ObjectId,
       ref: "Card",
-      required: true
-    }
-  }, { timestamps: true }
-)
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 const Comment = mongoose.model("Comment", CommentSchema);
 

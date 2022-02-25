@@ -11,11 +11,13 @@ const Board = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const boardId = findBoardId(id, state);
-  const board = useSelector((state) => state.boards.find(b => b._id === boardId));
+  const board = useSelector((state) =>
+    state.boards.find((b) => b._id === boardId)
+  );
   const [addFormListId, setAddFormListId] = useState("");
 
   useEffect(() => {
-    if (!boardId) return
+    if (!boardId) return;
     dispatch(actions.fetchBoard(boardId));
   }, [dispatch, boardId]);
 
@@ -40,7 +42,10 @@ const Board = () => {
 
         <main>
           <div id="list-container" className="list-container">
-            <ExistingLists addFormListId={addFormListId} setAddFormListId={setAddFormListId}/>
+            <ExistingLists
+              addFormListId={addFormListId}
+              setAddFormListId={setAddFormListId}
+            />
             <AddAList />
           </div>
         </main>
