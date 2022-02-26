@@ -62,19 +62,11 @@ const updateCard = (req, res, next) => {
 
 const deleteCard = (req, res, next) => {
   let id = req.params.id;
-  Card.pre('remove', function(next) {
-    Comment.remove({cardId: id}).exec();
+  Card.pre("remove", function (next) {
+    Comment.remove({ cardId: id }).exec();
     next();
-  })
-}
-
-
-
-// clientSchema.pre('remove', function(next) {
-//   Sweepstakes.remove({client_id: this._id}).exec(); {cardId: id}
-//   next();
-// });
-
+  });
+};
 
 exports.createCard = createCard;
 exports.getCard = getCard;

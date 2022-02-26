@@ -8,7 +8,14 @@ const ExistingLists = ({ addFormListId, setAddFormListId }) => {
   return (
     <div id="existing-lists" className="existing-lists">
       {lists.map((list) => {
-        return <List key={list._id} list={list} addFormListId={addFormListId} setAddFormListId={setAddFormListId} />;
+        return (
+          <List
+            key={list._id}
+            list={list}
+            addFormListId={addFormListId}
+            setAddFormListId={setAddFormListId}
+          />
+        );
       })}
     </div>
   );

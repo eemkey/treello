@@ -5,6 +5,7 @@ import * as cardActions from "../../actions/CardActions";
 import AddAComment from "./AddAComent";
 import Comments from "./Comments";
 import LabelsPopover from "./LabelsPopover";
+import DueDatePopover from "../ui/DueDatePopover";
 
 const CardModal = () => {
   let history = useHistory();
@@ -33,10 +34,16 @@ const CardModal = () => {
   const [description, setDescription] = useState("");
   const [comments, setComment] = useState("");
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [showLabelsPopover, setShowLabelsPopover] = useState(false);
+  const [showLabels, setShowLabels] = useState(false);
+  const [showDueDate, setShowDueDate] = useState(false);
 
-  const toggleShowLabelsPopover = (e) => {
-    setShowLabelsPopover(!showLabelsPopover);
+  const toggleShowLabels = () => {
+    setShowLabels(!showLabels);
+  };
+
+  const toggleShowDueDate = () => {
+    console.log("clicked toggleShowDueDate");
+    setShowDueDate(!showDueDate);
   };
 
   const pastDue = () => {
@@ -178,12 +185,19 @@ const CardModal = () => {
                     <h3>Labels</h3>
                     {labels()}
                     <div className="member-container">
-                      <i onClick={toggleShowLabelsPopover} className="plus-icon sm-icon"></i>
+                      <i
+                        onClick={toggleShowLabels}
+                        className="plus-icon sm-icon"
+                      ></i>
                     </div>
                   </li>
                   <li className="due-date-section">
                     <h3>Due Date</h3>
-                    <div id="dueDateDisplay" className="overdue completed">
+                    <div
+                      id="dueDateDisplay"
+                      onClick={toggleShowDueDate}
+                      className="overdue completed"
+                    >
                       <input
                         id="dueDateCheckbox"
                         type="checkbox"
@@ -248,21 +262,30 @@ const CardModal = () => {
               <li className="member-button">
                 <i className="person-icon sm-icon"></i>Members
               </li>
-              <li onClick={toggleShowLabelsPopover} className="label-button">
+              <li onClick={toggleShowLabels} className="label-button">
                 <i className="label-icon sm-icon"></i>Labels
               </li>
-              {showLabelsPopover ? (
+              {showLabels ? (
                 <LabelsPopover
-                  toggleShowLabelsPopover={toggleShowLabelsPopover}
+                  toggleShowLabels={toggleShowLabels}
                   card={card}
                 />
               ) : null}
               <li className="checklist-button">
                 <i className="checklist-icon sm-icon"></i>Checklist
               </li>
-              <li className="date-button not-implemented">
+              <li
+                onClick={toggleShowDueDate}
+                className="date-button not-implemented"
+              >
                 <i className="clock-icon sm-icon"></i>Due Date
               </li>
+              {showDueDate ? (
+                <DueDatePopover
+                  toggleShowDueDate={toggleShowDueDate}
+                  card={card}
+                />
+              ) : null}
             </ul>
             <h2>Actions</h2>
             <ul>

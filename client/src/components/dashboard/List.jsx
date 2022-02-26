@@ -6,8 +6,9 @@ import * as cardActions from "../../actions/CardActions";
 
 const List = ({ list, addFormListId, setAddFormListId }) => {
   const cards = useSelector((state) => {
-    return state.cards.filter((card) => card.listId === list._id)
-    .filter(card => !card.archived);
+    return state.cards
+      .filter((card) => card.listId === list._id)
+      .filter((card) => !card.archived);
   });
 
   const [isEditing, setIsEditing] = useState(false);

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import * as cardActions from "../../actions/CardActions";
 import { useDispatch } from "react-redux";
 
-const LabelsPopover = ({ card, toggleShowLabelsPopover }) => {
+const LabelsPopover = ({ card, toggleShowLabels }) => {
   const dispatch = useDispatch();
   const labelColors = ["green", "yellow", "orange", "red", "purple", "blue"];
 
@@ -24,11 +24,19 @@ const LabelsPopover = ({ card, toggleShowLabelsPopover }) => {
     [dispatch]
   );
 
+  const colorSelected = (color) => {
+    if (card.labels.includes(color)) {
+      return "check-icon sm-icon";
+    } else {
+      return "";
+    }
+  };
+
   const labels = labelColors.map((color, idx) => {
     return (
-      <li onClick={() => handleUpdateLabels(color)}>
+      <li key={color} onClick={() => handleUpdateLabels(color)}>
         <div className={`${color} colorblindable" data-id="${idx + 1}"`}>
-          <i className="check-icon sm-icon"></i>
+          <i className={colorSelected(color)}></i>
         </div>
         <div className={`label-background ${color}`}></div>
         <div className="label-background-overlay"></div>
@@ -44,7 +52,7 @@ const LabelsPopover = ({ card, toggleShowLabelsPopover }) => {
           <span>Labels</span>
           <a
             href="#"
-            onClick={toggleShowLabelsPopover}
+            onClick={toggleShowLabels}
             className="icon-sm icon-close"
           ></a>
         </header>

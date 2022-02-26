@@ -20,12 +20,10 @@ const Comment = ({ comment }) => {
 
   return (
     <>
-      <div className="member-container">
-        
-      </div>
+      <div className="member-container"></div>
       <h3>Team 1</h3>
       <div className="comment static-comment">
-         <span>{comment.text}</span> 
+        <span>{comment.text}</span>
       </div>
 
       {/*<div className="comment">
@@ -38,7 +36,7 @@ const Comment = ({ comment }) => {
             <a className="light-button smiley-icon sm-icon"></a>
             <a className="light-button email-icon sm-icon"></a>
           </div> */}
-          {/* <div>
+      {/* <div>
             <p>You haven&apos;t typed anything!</p>
             <input
               type="submit"
